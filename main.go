@@ -402,9 +402,9 @@ func run() int {
 
 	display.Init()
 	
-	sdl_window.screen = display.SetMode(int32(Width),int32(Height),gogame.FIRSTHIDDEN,32)
+	sdl_window.screen = display.SetMode(int32(Width),int32(Height), 0 ,32)
 	sdl_window.win = display.GetWindow()
-    
+  
     display.SetWindowPos(sdl_window.win,(320-Width)/2,-Height)
     
     display.SetWindowTitle(sdl_window.win,"GameShellNotify")
@@ -442,6 +442,8 @@ func run() int {
     fmt.Println("x11info: ",x11info.Window )
     
 	running := true
+    
+
 	for running {
 		ev := event.Wait()
 		if ev.Type == event.QUIT {
