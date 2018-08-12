@@ -1,4 +1,5 @@
 gsnotify
+gsnotify-arm
 Jobs/*
 !Jobs/.gitkeep
 gsnotify.cfg
