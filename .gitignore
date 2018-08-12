@@ -1,3 +1,4 @@
 gsnotify
 Jobs/*
 !Jobs/.gitkeep
+gsnotify.cfg

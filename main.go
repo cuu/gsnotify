@@ -11,7 +11,8 @@ import (
     "log"
     "strconv"
     "path/filepath"
-
+    
+    "github.com/go-ini/ini"
 	"github.com/veandco/go-sdl2/sdl"
     "github.com/veandco/go-sdl2/ttf"
 
@@ -58,21 +59,60 @@ func (self *JobRespond) String() string{
 var (
     JobMap map[string]string // BashName => String(JobRespond)
     ALLOW_EXTS=[5]string{".sh",".py",".lsp",".js",".bin"}
-)
-const (
-	RUNEVT = 1 
-    EasingDur = 10
-    EasingDelay = 20 //ms
     Width = 160
     Height = 20
     SKIP_READ_DIR = 2
     DELAY_MS = 2000
-    DELAY_FREQ = 30*1000
+    DELAY_FREQ = 30*1000    
+)
+
+const (
+	RUNEVT = 1 
+    EasingDur = 10
+    EasingDelay = 20 //ms
+    GSNOTIFY_CFG="gsnotify.cfg"
 )
 
 var done chan bool
 
+func LoadConfig() {
+    if UI.FileExists(GSNOTIFY_CFG) {
+        load_opts := ini.LoadOptions{
+            IgnoreInlineComment:true,
+        }
+        cfg, err := ini.LoadSources(load_opts, GSNOTIFY_CFG )
+        if err != nil {
+            fmt.Printf("Fail to read file: %v\n", err)
+            return
+        }
+        
+        section := cfg.Section("Settings")
+        if section != nil {
+            _opts := section.KeyStrings()
+            for _,v := range _opts {
+                if v == "DELAY_MS" {
+                    val := section.Key(v).String()
+                    i, err := strconv.Atoi(val)
+                    if err == nil {
+                        DELAY_MS = i
+                    }
+                }
+                if v == "DELAY_FREQ" {
+                    val := section.Key(v).String()
+                    i, err := strconv.Atoi(val)
+                    if err == nil {
+                        DELAY_FREQ = i
+                    }
+                }
+            }
+        }
+    }
+}
+
 func init() {
+    
+    LoadConfig()
+    
     sdl_window = &SDLWindow{}
     sdl_window.Data100 = EasingData(0,100)
     sdl_window.Data40 = EasingData(0,40)
@@ -388,6 +428,8 @@ func SearchAndDestory(pidFile string) {
 	ioutil.WriteFile(pidFile, []byte(fmt.Sprintf("%d", os.Getpid())), 0664)
     return
 }
+
+
 
 func main() {
 	var exitcode int
