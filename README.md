@@ -65,3 +65,7 @@ fi
 
 change value **DELAY\_FREQ** to setup round robin interval
 default is 30000 ~~ 30 seconds
+
+BGCOLOR  background color  
+TXTCOLOR text color
+
