@@ -67,7 +67,7 @@ const (
     Height = 20
     SKIP_READ_DIR = 2
     DELAY_MS = 2000
-    DELAY_FREQ = 3*1000
+    DELAY_FREQ = 30*1000
 )
 
 var done chan bool
