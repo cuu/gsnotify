@@ -57,3 +57,11 @@ if [ $RES -gt $SLICE ]; then
 	echo "{\"type\":\"once\",\"content\":\"$timestr\"}"
 fi
 ```
+
+
+### Config ###
+
+> cp gsnotify-example.cfg gsnotify.cfg
+
+change value **DELAY\_FREQ** to setup round robin interval
+default is 30000 ~~ 30 seconds
