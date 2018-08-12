@@ -66,10 +66,10 @@ fi
 change value **DELAY\_FREQ** to setup round robin interval
 default is 30000 ~~ 30 seconds
 
-BGCOLOR  background color ,default is #eab934 
-TXTCOLOR text color , default is #ffffff
-FTSIZE  main font size,default is 14
-Width   width of the window,default is 320
-Height  height of the window, default is 20
+BGCOLOR  background color ,default is #eab934   
+TXTCOLOR text color , default is #ffffff  
+FTSIZE  main font size,default is 14  
+Width   width of the window,default is 320  
+Height  height of the window, default is 20  
 
 
