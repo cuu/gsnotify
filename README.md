@@ -1,23 +1,24 @@
-Simple notify widget for GameShell
+Simple notify widget for [GameShell](https://www.clockworkpi.com/)
 
 Running scripts Under Jobs every 30 seconds,and display the results on top of screen 
 
-The script will receive a parameter of unixstamp time ( in bash , it's $1)
-
+The script will receive a parameter of unix timestamp ( in bash , it's $1)
 
 The script returns a json formatted data that interacts with the gsnotify
 
 Format is
-{"type":"once","content":"the is the content "}
+
+> {"type":"once","content":"the is the content "}
+
 Once type is only shown once
 
-{"type":"repeat","content":"the is the content "}
+> {"type":"repeat","content":"the is the content "}
+
 The repeat type will be repeated all the time as long as it meets the criteria
 
-Very simple
-
-For now it supports file with ".sh",".py",".lsp",".js",".bin"  exts
-and the script file must have have executable permissions (chmod +x whatever.sh)
+For now it supports file with 
+**".sh",".py",".lsp",".js",".bin"** exts
+and the script file must have have executable permissions (**chmod +x whatever.sh**)
 
 
 Here is two example bash scripts:
@@ -56,6 +57,3 @@ if [ $RES -gt $SLICE ]; then
 	echo "{\"type\":\"once\",\"content\":\"$timestr\"}"
 fi
 ```
-
-
-
