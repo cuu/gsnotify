@@ -402,7 +402,7 @@ func run() int {
 
 	display.Init()
 	
-	sdl_window.screen = display.SetMode(int32(Width),int32(Height),gogame.FIRSTHIDDEN|gogame.ONTOP,32)
+	sdl_window.screen = display.SetMode(int32(Width),int32(Height),gogame.FIRSTHIDDEN,32)
 	sdl_window.win = display.GetWindow()
     
     display.SetWindowPos(sdl_window.win,(320-Width)/2,-Height)
