@@ -1,6 +1,6 @@
 Simple notify widget for [GameShell](https://www.clockworkpi.com/)
 
-Running scripts Under Jobs every 30 seconds,and display the results on top of screen 
+Running scripts Under **"Jobs"** folder every 30 seconds,and display the results on top of screen 
 
 The script will receive a parameter of unix timestamp ( in bash , it's $1)
 
