@@ -63,7 +63,9 @@ var (
     Height = 20
     SKIP_READ_DIR = 2
     DELAY_MS = 2000
-    DELAY_FREQ = 30*1000    
+    DELAY_FREQ = 30*1000   
+    BGCOLOR  =  &color.Color{0x34,0xb9,0xea,255}
+    TXTCOLOR =  &color.Color{0xff,0xff,0xff,255}
 )
 
 const (
@@ -74,6 +76,23 @@ const (
 )
 
 var done chan bool
+
+func ConvertToRGB(hexstr string) *color.Color {
+	if len(hexstr) < 7 || string(hexstr[0]) != "#" { // # 00 00 00
+		log.Fatalf("ConvertToRGB hex string format error %s", hexstr)
+		//fmt.Printf("ConvertToRGB hex string format error %s", hexstr)
+		return nil
+	}
+	
+	h := strings.TrimLeft(hexstr,"#")
+
+	r,_ := strconv.ParseInt(h[0:2], 16,0)
+	g,_ := strconv.ParseInt(h[2:4], 16,0)
+	b,_ := strconv.ParseInt(h[4:6], 16,0)
+	
+	col := &color.Color{ uint32(b),uint32(g),uint32(r),255 }
+	return col
+}
 
 func LoadConfig() {
     if UI.FileExists(GSNOTIFY_CFG) {
@@ -104,6 +123,21 @@ func LoadConfig() {
                         DELAY_FREQ = i
                     }
                 }
+                
+                if v == "BGCOLOR" {
+                    parsed_color := ConvertToRGB( section.Key(v).String() )
+                    if parsed_color != nil {
+                        BGCOLOR = parsed_color
+                    }
+                }
+                
+                if v == "TXTCOLOR" {
+                    parsed_color := ConvertToRGB( section.Key(v).String() )
+                    if parsed_color != nil {
+                        TXTCOLOR = parsed_color
+                    }
+                }                
+                
             }
         }
     }
@@ -246,9 +280,9 @@ func RunScript(_script_name string) *JobRespond {
 
 func ShowARound(content string) {
     
-    surface.Fill(sdl_window.screen, &color.Color{255,255,255,255} ) 
+    surface.Fill(sdl_window.screen, BGCOLOR) 
     
- 	my_text := font.Render(sdl_window.main_font,content,true, &color.Color{234,123,12,255},nil)
+ 	my_text := font.Render(sdl_window.main_font,content,true, TXTCOLOR,nil)
 
 	surface.Blit(sdl_window.screen,my_text,
             draw.MidRect(Width/2,Height/2,surface.GetWidth(my_text),surface.GetHeight(my_text),Width,Height),nil)
