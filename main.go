@@ -169,7 +169,14 @@ func LoadConfig() {
 }
 
 func init() {
-    
+
+    dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+    if err != nil {
+            log.Fatal(err)
+    }
+    fmt.Println(dir)
+    os.Chdir(dir)
+        
     LoadConfig()
     
     sdl_window = &SDLWindow{}
@@ -492,14 +499,7 @@ func SearchAndDestory(pidFile string) {
 
 func main() {
 	var exitcode int
-    
-    dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-    if err != nil {
-            log.Fatal(err)
-    }
-    fmt.Println(dir)
-    os.Chdir(dir)
-    
+        
 	os.Setenv("GODEBUG", "cgocheck=0")
 	
     SearchAndDestory("/tmp/gsnotify.pid")
