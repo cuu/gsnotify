@@ -64,7 +64,7 @@ fi
 > cp gsnotify-example.cfg gsnotify.cfg
 
 change value **DELAY\_FREQ** to setup round robin interval  
-default is 30000 ~~ 30 seconds
+default is 30000, equals to 30 seconds
 
 BGCOLOR  background color ,default is #eab934   
 TXTCOLOR text color , default is #ffffff  
