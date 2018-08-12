@@ -164,11 +164,21 @@ func (self *SDLWindow) EasingWindowBottom(distance int) {
 }
 
 
+func CheckScriptExt(_script_name) bool {
+    for i in range ALLOW_EXTS {
+        if strings.HasSuffix(strings.ToLower(_script_name), ALLOW_EXTS[i]) {
+            return true
+        }
+    }
+    
+    return false
+}
+
 func RunScript(_script_name string) *JobRespond {
     cur_time_unix := time.Unix()
 
     if UI.IsAFile(_script_name) {
-        if strings.HasSuffix(strings.ToLower(_script_name),".sh") {
+        if CheckScriptExt(_script_name) {
             out, err := exec.Command(_script_name,fmt.Sprintf("%d",cur_time_unix)).Output()
             if err != nil {
                 fmt.Println(err)
