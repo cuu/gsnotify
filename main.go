@@ -299,7 +299,7 @@ func run() int {
 
 	font.Init()
 	
-	font_path := "NotoSansCJK-Regular.ttf"
+	font_path := "/home/cpi/apps/launcher/skin/default/truetype/NotoSansCJK-Regular.ttf"
 	
 	notocjk := font.Font(font_path,18)
 	fmt.Println( font.LineSize( notocjk ))
