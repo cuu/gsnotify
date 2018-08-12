@@ -59,14 +59,14 @@ func (self *JobRespond) String() string{
 var (
     JobMap map[string]string // BashName => String(JobRespond)
     ALLOW_EXTS=[5]string{".sh",".py",".lsp",".js",".bin"}
-    Width = 160
+    Width = 320
     Height = 20
     SKIP_READ_DIR = 2
     DELAY_MS = 2000
     DELAY_FREQ = 30*1000   
     BGCOLOR  =  &color.Color{0x34,0xb9,0xea,255}
     TXTCOLOR =  &color.Color{0xff,0xff,0xff,255}
-    FTSIZE = 18
+    FTSIZE = 14
 )
 
 const (
