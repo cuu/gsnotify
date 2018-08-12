@@ -66,6 +66,7 @@ var (
     DELAY_FREQ = 30*1000   
     BGCOLOR  =  &color.Color{0x34,0xb9,0xea,255}
     TXTCOLOR =  &color.Color{0xff,0xff,0xff,255}
+    FTSIZE = 18
 )
 
 const (
@@ -123,7 +124,31 @@ func LoadConfig() {
                         DELAY_FREQ = i
                     }
                 }
+
+                if v == "Width" {
+                    val := section.Key(v).String()
+                    i, err := strconv.Atoi(val)
+                    if err == nil {
+                        Width = i
+                    }
+                }
                 
+                if v == "Height" {
+                    val := section.Key(v).String()
+                    i, err := strconv.Atoi(val)
+                    if err == nil {
+                        Height = i
+                    }
+                }
+                
+                if v == "FTSIZE" {
+                    val := section.Key(v).String()
+                    i, err := strconv.Atoi(val)
+                    if err == nil {
+                        FTSIZE = i
+                    }
+                }
+                                                                
                 if v == "BGCOLOR" {
                     parsed_color := ConvertToRGB( section.Key(v).String() )
                     if parsed_color != nil {
@@ -387,7 +412,7 @@ func run() int {
 	
 	font_path := "/home/cpi/apps/launcher/skin/default/truetype/NotoSansCJK-Regular.ttf"
 	
-	notocjk := font.Font(font_path,18)
+	notocjk := font.Font(font_path,FTSIZE)
 	fmt.Println( font.LineSize( notocjk ))
     sdl_window.main_font = notocjk
     
