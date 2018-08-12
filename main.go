@@ -67,7 +67,7 @@ const (
     Height = 20
     SKIP_READ_DIR = 2
     DELAY_MS = 2000
-    DELAY_FREQ = 30*1000
+    DELAY_FREQ = 3*1000
 )
 
 var done chan bool
@@ -164,9 +164,11 @@ func (self *SDLWindow) EasingWindowBottom(distance int) {
 }
 
 
-func CheckScriptExt(_script_name) bool {
-    for i in range ALLOW_EXTS {
-        if strings.HasSuffix(strings.ToLower(_script_name), ALLOW_EXTS[i]) {
+func CheckScriptExt(_script_name string ) bool {
+    
+    for _,v := range ALLOW_EXTS {
+
+        if strings.HasSuffix(strings.ToLower(_script_name), v) {
             return true
         }
     }
@@ -255,7 +257,7 @@ func LoopCheckJobs(_dir string) {
         for _,f := range files {
             
             fname := _dir+"/"+f.Name()
-            if strings.HasSuffix(strings.ToLower(fname),".sh") == false {
+            if CheckScriptExt(fname) == false {
                 continue
             }
             
