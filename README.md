@@ -1,4 +1,4 @@
-A simple notify widget for  [GameShell](https://www.clockworkpi.com/)  
+# A simple notify widget for  [GameShell](https://www.clockworkpi.com/)  #
 
 In this folder:  ` ~/apps/launcher/sys.py/gsnotify/Jobs `, you can create any script/program with return data in json format.  
 
