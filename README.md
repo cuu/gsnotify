@@ -48,9 +48,7 @@ if [ $RES -gt $SLICE ]; then
 fi
 ```
 
-The notify widget configuration file named "gsnotify.cfg" in this folder:
-
-> ~/apps/launcher/sys.py/gsnotify  
+The notify widget configuration file named "gsnotify.cfg" in this folder: ` ~/apps/launcher/sys.py/gsnotify `
 
 And the meaning of each parameter as follows:
 
