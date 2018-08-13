@@ -1,27 +1,19 @@
-Simple notify widget for [GameShell](https://www.clockworkpi.com/)
+A simple notify widget for  [GameShell](https://www.clockworkpi.com/)
 
-Running scripts Under **"Jobs"** folder every 30 seconds,and display the results on the top of screen 
+In this folder: ~/apps/launcher/sys.py/gsnotify/Jobs , you can create any script/program with return data in json format.
 
-The script will receive a parameter of unix timestamp ( in bash , it's $1)
+The returned json format is as follows:
 
-The script returns a json formatted data that interacts with the gsnotify
+For notify once:
+{"type":"once","content":"Hi! I am the anti-addiction robot."}
 
-Format is
+For repeated notice:
+{"type":"repeat","content":"Have you done your homework yet?"}
 
-> {"type":"once","content":"the is the content "}
+The script file extension supports by default: **".sh",".py",".lsp",".js",".bin"**  
+Note that your script has executable permissions. (chmod +x whatever.sh)
 
-Once type is only shown once
-
-> {"type":"repeat","content":"the is the content "}
-
-The repeat type will be repeated all the time as long as it meets the criteria
-
-For now it supports file with 
-**".sh",".py",".lsp",".js",".bin"** exts
-and the script file must have have executable permissions (**chmod +x whatever.sh**)
-
-
-Here is two example bash scripts:
+Here are 2 examples for bash scripts
 
 01\_test.sh
 
@@ -58,18 +50,12 @@ if [ $RES -gt $SLICE ]; then
 fi
 ```
 
+The notify widget configuration file named "gsnotify.cfg" in this folder: ~/apps/launcher/sys.py/gsnotify 
+And the meaning of each parameter as follows:
 
-### Config ###
-
-> cp gsnotify-example.cfg gsnotify.cfg
-
-change value **DELAY\_FREQ** to setup round robin interval  
-default is 30000, equals to 30 seconds
-
-BGCOLOR  background color ,default is #eab934   
-TXTCOLOR text color , default is #ffffff  
-FTSIZE  main font size,default is 14  
-Width   width of the window,default is 320  
-Height  height of the window, default is 20  
-
-
+* DELAY_FREQ for polling interval, the default value is 30000, which means 30 seconds.
+* BGCOLOR for background color, the default value is #eab934
+* TXTCOLOR for font color, the default value is #ffffff
+* FTSIZE for font size, the default value is 14(px).
+* Width for notify widget width, the default value is 320(px).
+* Height for notify widget height, the default value is 20(px).
