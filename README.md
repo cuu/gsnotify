@@ -1,6 +1,9 @@
 A simple notify widget for  [GameShell](https://www.clockworkpi.com/)  
 
-In this folder: ~/apps/launcher/sys.py/gsnotify/Jobs , you can create any script/program with return data in json format.  
+In this folder:  
+> ~/apps/launcher/sys.py/gsnotify/Jobs
+
+you can create any script/program with return data in json format.  
 
 The returned json format is as follows:  
 
@@ -11,7 +14,7 @@ For repeated notice:
 > {"type":"repeat","content":"Have you done your homework yet?"}  
 
 The script file extension supports by default: **".sh",".py",".lsp",".js",".bin"**    
-Note that your script has executable permissions. (chmod +x whatever.sh)  
+Note that your script has executable permissions. (chmod +x yourscript.sh)  
 
 Here are 2 examples for bash scripts  
 
