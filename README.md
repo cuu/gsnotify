@@ -1,19 +1,19 @@
-A simple notify widget for  [GameShell](https://www.clockworkpi.com/)
+A simple notify widget for  [GameShell](https://www.clockworkpi.com/)  
 
-In this folder: ~/apps/launcher/sys.py/gsnotify/Jobs , you can create any script/program with return data in json format.
+In this folder: ~/apps/launcher/sys.py/gsnotify/Jobs , you can create any script/program with return data in json format.  
 
-The returned json format is as follows:
+The returned json format is as follows:  
 
-For notify once:
-{"type":"once","content":"Hi! I am the anti-addiction robot."}
+For notify once:  
+> {"type":"once","content":"Hi! I am the anti-addiction robot."}
 
-For repeated notice:
-{"type":"repeat","content":"Have you done your homework yet?"}
+For repeated notice:  
+> {"type":"repeat","content":"Have you done your homework yet?"}  
 
-The script file extension supports by default: **".sh",".py",".lsp",".js",".bin"**  
-Note that your script has executable permissions. (chmod +x whatever.sh)
+The script file extension supports by default: **".sh",".py",".lsp",".js",".bin"**    
+Note that your script has executable permissions. (chmod +x whatever.sh)  
 
-Here are 2 examples for bash scripts
+Here are 2 examples for bash scripts  
 
 01\_test.sh
 
@@ -50,7 +50,10 @@ if [ $RES -gt $SLICE ]; then
 fi
 ```
 
-The notify widget configuration file named "gsnotify.cfg" in this folder: ~/apps/launcher/sys.py/gsnotify 
+The notify widget configuration file named "gsnotify.cfg" in this folder:
+
+> ~/apps/launcher/sys.py/gsnotify  
+
 And the meaning of each parameter as follows:
 
 * DELAY_FREQ for polling interval, the default value is 30000, which means 30 seconds.
