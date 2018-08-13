@@ -1,17 +1,12 @@
 A simple notify widget for  [GameShell](https://www.clockworkpi.com/)  
 
-In this folder:  
-> ~/apps/launcher/sys.py/gsnotify/Jobs
-
-you can create any script/program with return data in json format.  
+In this folder:  ` ~/apps/launcher/sys.py/gsnotify/Jobs `, you can create any script/program with return data in json format.  
 
 The returned json format is as follows:  
 
-For notify once:  
-> {"type":"once","content":"Hi! I am the anti-addiction robot."}
+For notify once: ` {"type":"once","content":"Hi! I am the anti-addiction robot."}`  
 
-For repeated notice:  
-> {"type":"repeat","content":"Have you done your homework yet?"}  
+For repeated notice: `{"type":"repeat","content":"Have you done your homework yet?"}`  
 
 The script file extension supports by default: **".sh",".py",".lsp",".js",".bin"**    
 Note that your script has executable permissions. (chmod +x yourscript.sh)  
@@ -59,9 +54,10 @@ The notify widget configuration file named "gsnotify.cfg" in this folder:
 
 And the meaning of each parameter as follows:
 
-* DELAY_FREQ for polling interval, the default value is 30000, which means 30 seconds.
-* BGCOLOR for background color, the default value is #eab934
-* TXTCOLOR for font color, the default value is #ffffff
-* FTSIZE for font size, the default value is 14(px).
-* Width for notify widget width, the default value is 320(px).
-* Height for notify widget height, the default value is 20(px).
+* `DELAY_FREQ` for polling interval, the default value is 30000, which means 30 seconds.
+* `BGCOLOR` for background color, the default value is #eab934
+* `TXTCOLOR` for font color, the default value is #ffffff
+* `FTSIZE` for font size, the default value is 14(px).
+* `Width` for notify widget width, the default value is 320(px).
+* `Height` for notify widget height, the default value is 20(px).
+
