@@ -20,7 +20,7 @@ Here are 2 examples for bash scripts
 echo '{"type":"repeat","content":"this is a test"}'
 ```
 
-02\_time.sh, display time info every 60 seconds
+02\_time.sh, display current time every 60 seconds.
 
 ```
 #!/bin/bash
