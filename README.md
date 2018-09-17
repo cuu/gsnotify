@@ -48,6 +48,30 @@ if [ $RES -gt $SLICE ]; then
 fi
 ```
 
+03\_battery.sh, display notification when battery is lower than 20% using `upower`
+```
+#!/bin/bash
+
+BAT_PNT=`upower -i $(upower -e | grep 'BAT') | grep -E "state|to\ full|percentage" | awk '/perc/{print $2}' | cut -d % -f1 `
+
+if [ "$BAT_PNT" -lt "20" ]; then
+	if [ "$BAT_PNT" -lt "15" ]; then
+			echo '{"type":"once","content":"Power<15%"}'
+	fi
+
+	if [ "$BAT_PNT" -lt "10" ]; then
+		echo '{"type":"repeat","content":"Power<10%,will poweroff soon"}'
+	fi
+
+	echo '{"type":"once","content":"Power<20%"}'
+
+else
+	echo $BAT_PNT
+fi
+
+```
+
+
 The notify widget configuration file named "gsnotify.cfg" in this folder: ` ~/apps/launcher/sys.py/gsnotify `
 
 And the meaning of each parameter as follows:
