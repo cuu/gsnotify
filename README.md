@@ -48,7 +48,7 @@ if [ $RES -gt $SLICE ]; then
 fi
 ```
 
-03\_battery.sh, display notification when battery is lower than 20% using `upower`
+03\_battery.sh, display notifications when battery is lower than 20% using `upower`
 ```
 #!/bin/bash
 
