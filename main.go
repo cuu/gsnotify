@@ -418,7 +418,9 @@ func run() int {
 	font.Init()
 	
 	font_path := "/home/cpi/apps/launcher/skin/default/truetype/NotoSansCJK-Regular.ttf"
-	
+	if UI.FileExists(font_path) == false {
+		font_path = "/home/cpi/launcher/skin/default/truetype/NotoSansCJK-Regular.ttf"
+	}
 	notocjk := font.Font(font_path,FTSIZE)
 	fmt.Println( font.LineSize( notocjk ))
     sdl_window.main_font = notocjk
