@@ -99,6 +99,20 @@ func ConvertToRGB(hexstr string) *color.Color {
 	return col
 }
 
+
+func DumpConfig() {
+	if UI.FileExists(GSNOTIFY_CFG)== false {
+		sample_ini :=  fmt.Sprintf("[Settings]\nDELAY_MS=%d\nDELAY_FREQ=%d\nBGCOLOR=#eab934\nTXTCOLOR=#ffffff\nWidth=%d\nHeight=%d\nFTSIZE=%d\nEnabled=%s",DELAY_MS,DELAY_FREQ,Width,Height,FTSIZE, strings.Title(fmt.Sprintf("%t",Enabled))   )
+
+		f, err := os.Create(GSNOTIFY_CFG)
+		UI.Assert(err)
+		n, err := f.WriteString(sample_ini)
+    fmt.Printf("wrote %d bytes\n", n)
+		f.Sync()
+		f.Close()
+	}
+}
+
 func WriteConfig() {
 	
 	if UI.FileExists(GSNOTIFY_CFG) {
@@ -125,6 +139,9 @@ func WriteConfig() {
 			
 		}
 		
+	}else {
+		DumpConfig()
+		LoadConfig()
 	}
 }
 
@@ -222,10 +239,11 @@ func init() {
 	}
 	fmt.Println(dir)
 	os.Chdir(dir)
-	
+
+	Enabled  = true
+
 	LoadConfig()
 	
-	Enabled = true
 	
 	sdl_window = &SDLWindow{}
 	sdl_window.Data100 = EasingData(0,100)
