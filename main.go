@@ -228,6 +228,8 @@ func LoadConfig() {
 				
 			}
 		}
+	}else {
+		DumpConfig()
 	}
 }
 
