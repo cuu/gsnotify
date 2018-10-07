@@ -409,11 +409,6 @@ func LoopCheckJobs(_dir string) {
 	}()
 	
 	counter := 0
-
-	if Enabled == false { // check if disabled
-		fmt.Println("Disabled")
-		return
-	}
 	
 	if UI.FileExists(_dir) == false && UI.IsDirectory(_dir) == false {
 		return
@@ -433,32 +428,36 @@ func LoopCheckJobs(_dir string) {
 			}
 		}
 		
-		for _,f := range files {
+		if Enabled == true {
+			for _,f := range files {
 			
-			fname := _dir+"/"+f.Name()
-			if CheckScriptExt(fname) == false {
-				continue
-			}
-			
-			job_respond := RunScript( fname )
-			if job_respond!= nil {
-				job_respond_string := job_respond.String()
+				fname := _dir+"/"+f.Name()
+				if CheckScriptExt(fname) == false {
+					continue
+				}
 				
-				if job_respond.Type == "once" {
-					if val, ok := JobMap[_dir+"/"+f.Name()]; ok {
-						
-						if val != job_respond_string {
+				job_respond := RunScript( fname )
+				if job_respond!= nil {
+					job_respond_string := job_respond.String()
+					
+					if job_respond.Type == "once" {
+						if val, ok := JobMap[_dir+"/"+f.Name()]; ok {
+							
+							if val != job_respond_string {
+								JobMap[_dir+"/"+f.Name()] = job_respond_string
+								ShowARound( job_respond.Content )
+							}
+						}else {
 							JobMap[_dir+"/"+f.Name()] = job_respond_string
 							ShowARound( job_respond.Content )
 						}
-					}else {
-						JobMap[_dir+"/"+f.Name()] = job_respond_string
+					}else if job_respond.Type == "repeat" {
 						ShowARound( job_respond.Content )
 					}
-				}else if job_respond.Type == "repeat" {
-					ShowARound( job_respond.Content )
 				}
 			}
+		} else {
+			
 		}
 		
 		time.BlockDelay(DELAY_FREQ) 
