@@ -633,7 +633,7 @@ func main() {
         
 	os.Setenv("GODEBUG", "cgocheck=0")
 
-	InitSocket()
+	go InitSocket()
 	
 	SearchAndDestory("/tmp/gsnotify.pid")
     
