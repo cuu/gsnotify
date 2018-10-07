@@ -147,6 +147,10 @@ func WriteConfig() {
 
 
 func LoadConfig() {
+	if UI.FileExists(GSNOTIFY_CFG) == false {
+		DumpConfig()
+	}
+	
 	if UI.FileExists(GSNOTIFY_CFG) {
 		load_opts := ini.LoadOptions{
 			IgnoreInlineComment:true,
@@ -228,8 +232,6 @@ func LoadConfig() {
 				
 			}
 		}
-	}else {
-		DumpConfig()
 	}
 }
 
