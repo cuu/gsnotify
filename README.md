@@ -61,9 +61,11 @@ if [ "$BAT_PNT" -lt "20" ]; then
 	fi
 
 	if [ "$BAT_PNT" -lt "10" ]; then
+		echo "keydown" | socat - UNIX-CONNECT:/tmp/gameshell
 		echo '{"type":"repeat","content":"Power<10%,will poweroff soon"}'
 	fi
 
+	echo "keydown" | socat - UNIX-CONNECT:/tmp/gameshell
 	echo '{"type":"once","content":"Power<20%"}'
 
 else
