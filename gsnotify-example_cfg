@@ -1,7 +1,7 @@
 [Settings]
 DELAY_MS   = 2000
 DELAY_FREQ = 30000
-BGCOLOR    = #eab934
+BGCOLOR    = #ff004d
 TXTCOLOR   = #ffffff
 Width      = 320
 Height     = 20
