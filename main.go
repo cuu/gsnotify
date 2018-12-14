@@ -65,7 +65,7 @@ var (
 	Height = 24
 	SKIP_READ_DIR = 2
 	DELAY_MS = 2000
-	DELAY_FREQ = 3*1000   
+	DELAY_FREQ = 30*1000   
 	BGCOLOR  =  &color.Color{0xff,0x00,0x4d,255}
 	TXTCOLOR =  &color.Color{0xff,0xff,0xff,255}
 	FTSIZE = 14
@@ -679,7 +679,7 @@ func main() {
 	SearchAndDestory("/tmp/gsnotify.pid")
     
 	sdl.Main(func() {
-		//time.BlockDelay(DELAY_FREQ)
+		time.BlockDelay(DELAY_FREQ/2)
 		exitcode = run()
 	})
 
