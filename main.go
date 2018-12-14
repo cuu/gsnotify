@@ -62,10 +62,10 @@ var (
 	JobMap map[string]string // BashName => String(JobRespond)
 	ALLOW_EXTS=[5]string{".sh",".py",".lsp",".js",".bin"}
 	Width = 320
-	Height = 20
+	Height = 24
 	SKIP_READ_DIR = 2
 	DELAY_MS = 2000
-	DELAY_FREQ = 30*1000   
+	DELAY_FREQ = 3*1000   
 	BGCOLOR  =  &color.Color{0xff,0x00,0x4d,255}
 	TXTCOLOR =  &color.Color{0xff,0xff,0xff,255}
 	FTSIZE = 14
@@ -104,7 +104,7 @@ func ConvertToRGB(hexstr string) *color.Color {
 
 func DumpConfig() {
 	if UI.FileExists(GSNOTIFY_CFG)== false {
-		sample_ini :=  fmt.Sprintf("[Settings]\nDELAY_MS=%d\nDELAY_FREQ=%d\nBGCOLOR=#eab934\nTXTCOLOR=#ffffff\nWidth=%d\nHeight=%d\nFTSIZE=%d\nEnabled=%s\nAutoShutDown=%s",DELAY_MS,DELAY_FREQ,Width,Height,FTSIZE, strings.Title(fmt.Sprintf("%t",Enabled)),strings.Title(fmt.Sprintf("%t",AutoShutDown) ) )
+		sample_ini :=  fmt.Sprintf("[Settings]\nDELAY_MS=%d\nDELAY_FREQ=%d\nBGCOLOR=#ff004d\nTXTCOLOR=#ffffff\nWidth=%d\nHeight=%d\nFTSIZE=%d\nEnabled=%s\nAutoShutDown=%s",DELAY_MS,DELAY_FREQ,Width,Height,FTSIZE, strings.Title(fmt.Sprintf("%t",Enabled)),strings.Title(fmt.Sprintf("%t",AutoShutDown) ) )
 
 		f, err := os.Create(GSNOTIFY_CFG)
 		UI.Assert(err)
@@ -405,15 +405,15 @@ func ShowARound(content string) {
  	my_text := font.Render(sdl_window.main_font,content,true, TXTCOLOR,nil)
 
 	surface.Blit(sdl_window.screen,my_text,
-		draw.MidRect(Width/2,Height/2,surface.GetWidth(my_text),surface.GetHeight(my_text),Width,Height),nil)
+		draw.MidRect(Width/2,Height/2-2,surface.GetWidth(my_text),surface.GetHeight(my_text),Width,Height),nil)
 	
 	display.Flip()    
 	
-	sdl_window.EasingWindowTop(Height)
+	sdl_window.EasingWindowBottom(Height)
 	
 	time.BlockDelay(DELAY_MS/2)
 	
-	sdl_window.EasingWindowBottom(Height)
+	sdl_window.EasingWindowTop(Height)
     
 }
 
@@ -517,7 +517,7 @@ func run() int {
 	sdl_window.win = display.GetWindow()
   
   
-	display.SetWindowPos(sdl_window.win,(int(mode.W)-Width)/2,int(mode.H)+Height)
+	display.SetWindowPos(sdl_window.win,(int(mode.W)-Width)/2, -Height)
 	
 	display.SetWindowTitle(sdl_window.win,"GameShellNotify")
 	display.SetWindowBordered(sdl_window.win,false)
@@ -537,7 +537,7 @@ func run() int {
 	fmt.Println( font.LineSize( notocjk ))
 	sdl_window.main_font = notocjk
 	
- 	my_text := font.Render(notocjk,"AirPlane Mode",true, &color.Color{234,123,12,255},nil)
+ 	my_text := font.Render(notocjk,"GsNotify",true, TXTCOLOR , nil)
 	
 	surface.Blit(sdl_window.screen,my_text,
 		draw.MidRect(Width/2,Height/2,surface.GetWidth(my_text),surface.GetHeight(my_text),Width,Height),nil)
