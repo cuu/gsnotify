@@ -12,7 +12,8 @@ import (
 	"strconv"
 	"path/filepath"
 	"net"
-	
+	gotime "time"
+  
 	"github.com/go-ini/ini"
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
@@ -28,8 +29,8 @@ import (
 	"github.com/cuu/gogame/font"
 	"github.com/cuu/gogame/time"	
 	
-	"github.com/cuu/LauncherGo/sysgo/easings"
-	"github.com/cuu/LauncherGo/sysgo/UI"
+	"github.com/cuu/LauncherGoDev/sysgo/easings"
+	"github.com/cuu/LauncherGoDev/sysgo/UI"
 	
 )
 
@@ -65,10 +66,11 @@ var (
 	SKIP_READ_DIR = 2
 	DELAY_MS = 2000
 	DELAY_FREQ = 30*1000   
-	BGCOLOR  =  &color.Color{0x34,0xb9,0xea,255}
+	BGCOLOR  =  &color.Color{0xff,0x00,0x4d,255}
 	TXTCOLOR =  &color.Color{0xff,0xff,0xff,255}
 	FTSIZE = 14
 	Enabled = true
+	AutoShutDown = true
 )
 
 const (
@@ -102,7 +104,7 @@ func ConvertToRGB(hexstr string) *color.Color {
 
 func DumpConfig() {
 	if UI.FileExists(GSNOTIFY_CFG)== false {
-		sample_ini :=  fmt.Sprintf("[Settings]\nDELAY_MS=%d\nDELAY_FREQ=%d\nBGCOLOR=#eab934\nTXTCOLOR=#ffffff\nWidth=%d\nHeight=%d\nFTSIZE=%d\nEnabled=%s",DELAY_MS,DELAY_FREQ,Width,Height,FTSIZE, strings.Title(fmt.Sprintf("%t",Enabled))   )
+		sample_ini :=  fmt.Sprintf("[Settings]\nDELAY_MS=%d\nDELAY_FREQ=%d\nBGCOLOR=#eab934\nTXTCOLOR=#ffffff\nWidth=%d\nHeight=%d\nFTSIZE=%d\nEnabled=%s\nAutoShutDown=%s",DELAY_MS,DELAY_FREQ,Width,Height,FTSIZE, strings.Title(fmt.Sprintf("%t",Enabled)),strings.Title(fmt.Sprintf("%t",AutoShutDown) ) )
 
 		f, err := os.Create(GSNOTIFY_CFG)
 		UI.Assert(err)
@@ -131,7 +133,13 @@ func WriteConfig() {
 				section.Key("Enabled").SetValue("False")
 			}
 		
-		
+			if AutoShutDown == true {
+				section.Key("AutoShutDown").SetValue("True")
+			}
+			if Enabled == false {
+				section.Key("AutoShutDown").SetValue("False")
+			}
+	
 			err:= Cfg.SaveTo(GSNOTIFY_CFG)
 			if err != nil {
 				fmt.Println(err)
@@ -229,7 +237,17 @@ func LoadConfig() {
 						Enabled = false
 					}
 				}
-				
+
+				if v == "AutoShutDown" {
+					if section.Key(v).String() == "True" {
+					 	AutoShutDown = true
+					}
+
+					if section.Key(v).String() == "False" {
+						AutoShutDown = false
+					}
+				}
+			
 			}
 		}
 	}
@@ -391,11 +409,11 @@ func ShowARound(content string) {
 	
 	display.Flip()    
 	
-	sdl_window.EasingWindowBottom(Height)
+	sdl_window.EasingWindowTop(Height)
 	
 	time.BlockDelay(DELAY_MS/2)
 	
-	sdl_window.EasingWindowTop(Height)
+	sdl_window.EasingWindowBottom(Height)
     
 }
 
@@ -470,14 +488,36 @@ func LoopCheckJobs(_dir string) {
 	
 }
 
+func ShutDownWhenLowPowerThanThreePercent() {
+  bat := UI.CheckBattery()
+  
+  if bat > -1 {
+    
+    if bat >= 0 && bat < 3 {
+      
+      cmd := exec.Command("sudo","halt","-p")
+      cmd.Run()
+      os.Exit(0)
+      
+    }
+    
+  }else {
+    fmt.Println("Battery not existed")
+  }
+  
+  gotime.Sleep(gotime.Duration(10) * gotime.Second)
+}
+
 func run() int {
 
 	display.Init()
-	
+	mode,_ := display.GetCurrentMode(0)
+  
 	sdl_window.screen = display.SetMode(int32(Width),int32(Height), 0 ,32)
 	sdl_window.win = display.GetWindow()
   
-	display.SetWindowPos(sdl_window.win,(320-Width)/2,-Height)
+  
+	display.SetWindowPos(sdl_window.win,(int(mode.W)-Width)/2,int(mode.H)+Height)
 	
 	display.SetWindowTitle(sdl_window.win,"GameShellNotify")
 	display.SetWindowBordered(sdl_window.win,false)
@@ -510,7 +550,8 @@ func run() int {
 	
 	go LoopCheckJobs("Jobs")
 	
-	
+	go ShutDownWhenLowPowerThanThreePercent()
+  
 	syswminfo,_ := sdl_window.win.GetWMInfo()
 	x11info := syswminfo.GetX11Info()
 	fmt.Println("x11info: ",x11info.Window )
@@ -638,7 +679,7 @@ func main() {
 	SearchAndDestory("/tmp/gsnotify.pid")
     
 	sdl.Main(func() {
-		time.BlockDelay(DELAY_FREQ)
+		//time.BlockDelay(DELAY_FREQ)
 		exitcode = run()
 	})
 

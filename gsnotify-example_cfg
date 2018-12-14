@@ -1,9 +1,11 @@
 [Settings]
-DELAY_MS=2000
-DELAY_FREQ=30000
-BGCOLOR=#eab934
-TXTCOLOR=#ffffff
-Width=320
-Height=30
-FTSIZE=48
-Enabled=True
+DELAY_MS   = 2000
+DELAY_FREQ = 30000
+BGCOLOR    = #eab934
+TXTCOLOR   = #ffffff
+Width      = 320
+Height     = 20
+FTSIZE     = 14
+Enabled    = False
+AutoShutDown = True
+
