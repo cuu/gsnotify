@@ -669,19 +669,22 @@ func InitSocket() {
 }
 
 
+
 func main() {
 	var exitcode int
         
 	os.Setenv("GODEBUG", "cgocheck=0")
 
-	go InitSocket()
-	
-	SearchAndDestory("/tmp/gsnotify.pid")
-    
-	sdl.Main(func() {
-		time.BlockDelay(DELAY_FREQ/2)
-		exitcode = run()
-	})
-
-	os.Exit(exitcode)
+  if len(os.Args) == 1 {
+    go InitSocket()	
+    SearchAndDestory("/tmp/gsnotify.pid")
+  
+    sdl.Main(func() {
+      time.BlockDelay(DELAY_FREQ/2)
+      exitcode = run()
+    })
+    os.Exit(exitcode)
+  }else { // if has any arguments,turn into daemon only for battery lower than 3% to poweroff
+    ShutDownWhenLowPowerThanThreePercent()
+  }
 }
