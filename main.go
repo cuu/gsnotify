@@ -253,7 +253,7 @@ func LoadConfig() {
 	}
 }
 
-func init() {
+func TheInit() {
 
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
@@ -674,10 +674,11 @@ func InitSocket() {
 
 func main() {
 	var exitcode int
-        
+  
 	os.Setenv("GODEBUG", "cgocheck=0")
 
   if len(os.Args) == 1 {
+    TheInit()
     go InitSocket()	
     SearchAndDestory("/tmp/gsnotify.pid")
   
