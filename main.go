@@ -489,23 +489,25 @@ func LoopCheckJobs(_dir string) {
 }
 
 func ShutDownWhenLowPowerThanThreePercent() {
-  bat := UI.CheckBattery()
+  for {
+    bat := UI.CheckBattery()
   
-  if bat > -1 {
+    if bat > -1 {
     
-    if bat >= 0 && bat < 3 {
+      if bat >= 0 && bat < 3 {
       
-      cmd := exec.Command("sudo","halt","-p")
-      cmd.Run()
-      os.Exit(0)
+        cmd := exec.Command("sudo","halt","-p")
+        cmd.Run()
+        os.Exit(0)
       
+      }
+    
+    }else {
+      fmt.Println("Battery not existed")
     }
-    
-  }else {
-    fmt.Println("Battery not existed")
-  }
   
-  gotime.Sleep(gotime.Duration(10) * gotime.Second)
+    gotime.Sleep(gotime.Duration(10) * gotime.Second)
+  }
 }
 
 func run() int {
