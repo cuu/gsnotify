@@ -29,9 +29,9 @@ import (
 	"github.com/cuu/gogame/font"
 	"github.com/cuu/gogame/time"	
   
-	"github.com/cuu/LauncherGoDev/sysgo"
-	"github.com/cuu/LauncherGoDev/sysgo/easings"
-	"github.com/cuu/LauncherGoDev/sysgo/UI"
+	"github.com/clockworkpi/LauncherGoDev/sysgo"
+	"github.com/clockworkpi/LauncherGoDev/sysgo/easings"
+	"github.com/clockworkpi/LauncherGoDev/sysgo/UI"
 	
 )
 
