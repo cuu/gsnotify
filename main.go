@@ -28,7 +28,8 @@ import (
 	//"github.com/cuu/gogame/image"
 	"github.com/cuu/gogame/font"
 	"github.com/cuu/gogame/time"	
-	
+  
+	"github.com/cuu/LauncherGoDev/sysgo"
 	"github.com/cuu/LauncherGoDev/sysgo/easings"
 	"github.com/cuu/LauncherGoDev/sysgo/UI"
 	
@@ -488,13 +489,47 @@ func LoopCheckJobs(_dir string) {
 	
 }
 
-func ShutDownWhenLowPowerThanThreePercent() {
+func  GetBatteryPercent() int {
+  if UI.FileExists(sysgo.Battery) == false {
+    return -1
+  }
+  
+  batinfos,err := UI.ReadLines(sysgo.Battery)
+  if err == nil {
+    for _,v := range batinfos {
+      if strings.HasPrefix(v, "POWER_SUPPLY_STATUS") {
+        parts := strings.Split(v,"=")
+        if len(parts) > 1 {
+          if strings.Contains(parts[1],"Charging") {
+            return 100//ignore Charging status
+          }
+        }
+      }else if strings.HasPrefix(v,"POWER_SUPPLY_CAPACITY") {
+        parts := strings.Split(v,"=")
+        if len(parts) > 1 {
+          cur_cap,err := strconv.Atoi(parts[1])
+          if err == nil {
+            return cur_cap
+          }else {
+            return 100 
+          }
+        }
+      }
+    }
+  }else{
+    fmt.Println(err)
+  }
+  //any error happens,return 100
+  return 100  
+}
+
+func ShutDownWhenLowPower() {
   for {
-    bat := UI.CheckBattery()
+    bat := GetBatteryPercent()
   
     if bat > -1 {
     
-      if bat >= 0 && bat < 3 {
+      if bat >= 0 && bat < 2 {// last 10 % of battery is so strong
       
         cmd := exec.Command("sudo","halt","-p")
         cmd.Run()
@@ -552,7 +587,7 @@ func run() int {
 	
 	go LoopCheckJobs("Jobs")
 	
-	go ShutDownWhenLowPowerThanThreePercent()
+	go ShutDownWhenLowPower()
   
 	syswminfo,_ := sdl_window.win.GetWMInfo()
 	x11info := syswminfo.GetX11Info()
@@ -688,6 +723,6 @@ func main() {
     })
     os.Exit(exitcode)
   }else { // if has any arguments,turn into daemon only for battery lower than 3% to poweroff
-    ShutDownWhenLowPowerThanThreePercent()
+    ShutDownWhenLowPower()
   }
 }
