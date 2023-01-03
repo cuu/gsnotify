@@ -478,7 +478,7 @@ func LoopCheckJobs(_dir string) {
 		} else {
 			
 		}
-		
+		//fmt.Println("DELAY_FREQ:",DELAY_FREQ)	
 		time.BlockDelay(DELAY_FREQ) 
 		
 		counter+=1
